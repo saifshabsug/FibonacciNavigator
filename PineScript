@@ -55,7 +55,7 @@ if (not na(target_high) and not na(target_low))
     for i = 0 to array.size(fib_levels) - 1
         level = array.get(fib_levels, i)
         fib_value = target_high - level * (target_high - target_low)
-        line.new(x1=bar_index, y1=fib_value, x2=bar_index + 100, y2=fib_value, color=array.get(fib_colors, i), width=1)
+        line.new(x1=bar_index - 100, y1=fib_value, x2=bar_index + 100, y2=fib_value, color=array.get(fib_colors, i), width=1, extend=extend.both)
         label.new(x=bar_index + 100, y=fib_value, text=str.tostring(level) + ": " + str.tostring(fib_value), style=label.style_label_left, color=array.get(fib_colors, i), textcolor=color.white, size=size.normal)
 
 plotshape(series=not na(target_high) ? bar_index : na, location=location.absolute, style=shape.labeldown, text="Target Candle", color=color.blue, textcolor=color.white)
