@@ -1,0 +1,61 @@
+//@version=5
+indicator("Magic Navigator", overlay=true)
+
+// Inputs
+input_date = input.time(timestamp("2023-01-01 00:00"), "Candle Date & Time")
+input_tf = input.string(defval="D", title="Timeframe", options=["1", "2", "3", "4", "5", "6", "10", "12", "15", "20", "30", "45", "60", "120", "240", "D", "W", "M"])
+
+// Function to get the high and low of the target candle
+f_get_candle_data(date) =>
+    var float candle_high = na
+    var float candle_low = na
+    if (time == date)
+        candle_high := high
+        candle_low := low
+    [candle_high, candle_low]
+
+// Fibonacci levels and their colors
+fib_levels = array.new_float(14)
+array.set(fib_levels, 0, 32.236)
+array.set(fib_levels, 1, 16.236)
+array.set(fib_levels, 2, 8.236)
+array.set(fib_levels, 3, 4.236)
+array.set(fib_levels, 4, 2.618)
+array.set(fib_levels, 5, 1.1414)
+array.set(fib_levels, 6, 1)
+array.set(fib_levels, 7, 0)
+array.set(fib_levels, 8, -0.1414)
+array.set(fib_levels, 9, -1.618)
+array.set(fib_levels, 10, -3.236)
+array.set(fib_levels, 11, -7.236)
+array.set(fib_levels, 12, -15.236)
+array.set(fib_levels, 13, -31.236)
+
+fib_colors = array.new_color(14)
+array.set(fib_colors, 0, color.new(color.blue, 0))
+array.set(fib_colors, 1, color.new(color.blue, 0))
+array.set(fib_colors, 2, color.new(color.blue, 0))
+array.set(fib_colors, 3, color.new(color.blue, 0))
+array.set(fib_colors, 4, color.new(color.green, 0))
+array.set(fib_colors, 5, color.new(color.red, 0))
+array.set(fib_colors, 6, color.new(color.gray, 0))
+array.set(fib_colors, 7, color.new(color.gray, 0))
+array.set(fib_colors, 8, color.new(color.red, 0))
+array.set(fib_colors, 9, color.new(color.green, 0))
+array.set(fib_colors, 10, color.new(color.blue, 0))
+array.set(fib_colors, 11, color.new(color.blue, 0))
+array.set(fib_colors, 12, color.new(color.blue, 0))
+array.set(fib_colors, 13, color.new(color.blue, 0))
+
+// Fetch the high and low for the target candle
+[target_high, target_low] = request.security(syminfo.tickerid, input_tf, f_get_candle_data(input_date))
+
+// Draw Fibonacci levels if the target candle is found
+if (not na(target_high) and not na(target_low))
+    for i = 0 to array.size(fib_levels) - 1
+        level = array.get(fib_levels, i)
+        fib_value = target_high - level * (target_high - target_low)
+        line.new(x1=bar_index, y1=fib_value, x2=bar_index + 100, y2=fib_value, color=array.get(fib_colors, i), width=1)
+        label.new(x=bar_index + 100, y=fib_value, text=str.tostring(level) + ": " + str.tostring(fib_value), style=label.style_label_left, color=array.get(fib_colors, i), textcolor=color.white, size=size.normal)
+
+plotshape(series=not na(target_high) ? bar_index : na, location=location.absolute, style=shape.labeldown, text="Target Candle", color=color.blue, textcolor=color.white)
