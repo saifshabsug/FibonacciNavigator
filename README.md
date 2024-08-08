@@ -28,7 +28,7 @@ Fibonacci Navigator is a powerful Pine Script indicator for TradingView that let
 
 ## 🌟 Example
 
-![Fibonacci Navigator Example](path/to/your/example_image.png)
+![Fibonacci Navigator Example](Nav.png)
 
 ## 🎨 Fibonacci Levels and Colors
 
