@@ -14,7 +14,7 @@ Fibonacci Navigator is a powerful Pine Script indicator for TradingView that let
 
 1. **Clone or download the repository**:
    ```bash
-   git clone https://github.com/yourusername/fibonacci-navigator.git
+   git clone https://github.com/saifshabsug/FibonacciNavigator.git
    ```
 
 2. **Copy the Pine Script code** from `fibonacci_navigator.pine` to your TradingView Pine Script editor.
@@ -58,7 +58,3 @@ This project is in collaboration with [Hammam Sawalma](https://github.com/hammam
 ## 📜 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-Feel free to replace `"https://github.com/yourusername/fibonacci-navigator.git"` with your actual repository URL and update the path to the example image as needed.
